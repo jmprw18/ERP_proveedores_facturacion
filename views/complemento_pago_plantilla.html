@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Complemento de Pago</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #000000;
+            margin: 0;
+            padding: 40px;
+            line-height: 1.5;
+            font-size: 11px;
+            background: #fff;
+        }
+
+        /* Header */
+        .header {
+            border-bottom: 2px solid #000000;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .company-name {
+            font-size: 20px;
+            font-weight: 700;
+            margin: 0;
+            color: #000000;
+        }
+
+        .company-details {
+            font-size: 10px;
+            color: #000000;
+            margin-top: 5px;
+        }
+
+        .doc-title {
+            text-align: right;
+        }
+
+        .doc-type {
+            font-size: 16px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #000000;
+        }
+
+        .uuid-box {
+            font-family: monospace;
+            font-size: 9px;
+            border: 1px solid #000000;
+            padding: 4px 8px;
+            margin-top: 8px;
+            display: inline-block;
+            color: #000000;
+        }
+
+        /* Sections */
+        .section-title {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            border-bottom: 1px solid #000000;
+            margin-bottom: 10px;
+            color: #000000;
+        }
+
+        .grid-2 {
+            display: flex;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .col {
+            flex: 1;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #000000;
+            padding: 4px 0;
+            font-size: 10px;
+        }
+
+        .label {
+            font-weight: 600;
+            color: #000000;
+        }
+
+        /* Payment Info Box */
+        .payment-info {
+            border: 1px solid #000000;
+            border-radius: 8px;
+            padding: 15px;
+            background: #ffffff;
+            margin-bottom: 30px;
+        }
+
+        .amount-large {
+            font-size: 24px;
+            font-weight: 700;
+            text-align: right;
+            margin-top: 10px;
+            color: #000000;
+        }
+
+        /* Related Docs Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 10px;
+            margin-bottom: 30px;
+        }
+
+        th {
+            text-align: left;
+            border-bottom: 2px solid #000000;
+            padding: 8px;
+            font-weight: 700;
+            color: #000000;
+        }
+
+        td {
+            border-bottom: 1px solid #000000;
+            padding: 8px;
+            color: #000000;
+        }
+
+        /* Footer */
+        .footer {
+            font-size: 8px;
+            color: #000000;
+            text-align: center;
+            margin-top: 50px;
+            border-top: 1px dashed #000000;
+            padding-top: 10px;
+        }
+
+        .stamp {
+            word-break: break-all;
+            margin-top: 10px;
+            font-family: monospace;
+            background: #f9f9f9;
+            padding: 10px;
+            border: 1px solid #000000;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div>
+            <h1 class="company-name">Muebles Sol S.A de C.V.</h1>
+            <div class="company-details">
+                RFC: MSL900101XYZ<br>
+                Régimen Fiscal: 601 - General de Ley Personas Morales
+            </div>
+        </div>
+        <div class="doc-title">
+            <div class="doc-type">Complemento de Recepción de Pagos</div>
+            <div class="uuid-box">Folio Fiscal: {{UUID_PAGO}}</div>
+            <div style="font-size: 10px; margin-top: 5px; color: #000000;">Fecha Emisión: {{FECHA_EMISION}}</div>
+        </div>
+    </div>
+
+    <div class="grid-2">
+        <div class="col">
+            <div class="section-title">EMISOR (PROVEEDOR)</div>
+            <div class="row"><span class="label">Razón Social:</span> <span>{{PROVEEDOR_NOMBRE}}</span></div>
+            <div class="row"><span class="label">RFC:</span> <span>{{PROVEEDOR_RFC}}</span></div>
+            <div class="row"><span class="label">Régimen:</span> <span>601</span></div>
+        </div>
+        <div class="col">
+            <div class="section-title">RECEPTOR (NOSOTROS)</div>
+            <div class="row"><span class="label">Razón Social:</span> <span>Muebles Sol S.A de C.V.</span></div>
+            <div class="row"><span class="label">RFC:</span> <span>MSL900101XYZ</span></div>
+            <div class="row"><span class="label">Uso CFDI:</span> <span>CP01 - Pagos</span></div>
+        </div>
+    </div>
+
+    <div class="payment-info">
+        <div class="section-title">DETALLES DEL PAGO</div>
+        <div class="grid-2" style="margin-bottom: 0;">
+            <div class="col">
+                <div class="row" style="border:none;"><span class="label">Fecha de Pago:</span>
+                    <span>{{FECHA_PAGO}}</span></div>
+                <div class="row" style="border:none;"><span class="label">Forma de Pago:</span> <span>03 - Transferencia
+                        electrónica</span></div>
+                <div class="row" style="border:none;"><span class="label">Moneda:</span> <span>{{MONEDA}}</span></div>
+            </div>
+            <div class="col">
+                <div style="font-size: 10px; font-weight: 600; text-align: right; color: #000000;">MONTO TOTAL PAGADO
+                </div>
+                <div class="amount-large">${{TOTAL}}</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-title">DOCUMENTOS RELACIONADOS</div>
+    <table>
+        <thead>
+            <tr>
+                <th>Id Documento (UUID)</th>
+                <th>Moneda</th>
+                <th>Método</th>
+                <th style="text-align: right;">Importe Saldo Ant.</th>
+                <th style="text-align: right;">Importe Pagado</th>
+                <th style="text-align: right;">Importe Insoluto</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{UUID_FACTURA}}</td>
+                <td>{{MONEDA}}</td>
+                <td>PPD</td>
+                <td style="text-align: right;">${{TOTAL}}</td>
+                <td style="text-align: right;">${{TOTAL}}</td>
+                <td style="text-align: right;">$0.00</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="footer">
+        <div>Este documento es una representación impresa de un CFDI de tipo Pago.</div>
+        <div class="stamp">
+            <strong>Sello Digital del Emisor:</strong><br>
+            {{SELLO_DIGITAL}}
+        </div>
+    </div>
+</body>
+
+</html>
